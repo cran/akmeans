@@ -1,0 +1,11 @@
+f68de69e6bce3432a7e62e0e2e6c06ef *DESCRIPTION
+8b54e5a89fbda3af5e077053d40bec76 *NAMESPACE
+d8fd4af1962c2b03e1033da3af680652 *R/akmeans.R
+2f3c3a0e52411b3e328e312ad4c5dcb4 *R/norm.sim.ksc.R
+ae3ac341841ed23161f00c3d5c4d69dd *R/norm.sim.ksc.center.update.R
+b8dd34e551ae7481e1303d297597f085 *R/quick.norm.R
+5830543b59d8fd4856b4629a2f1a5ca3 *man/akmeans-package.Rd
+40f9443ba8420982eb7535f1b6eb6bff *man/akmeans.Rd
+5d1096233e35b41482126b2647907391 *man/norm.sim.ksc.Rd
+907ba817a6ae8a6f9c4a17ae87948a42 *man/norm.sim.ksc.center.update.Rd
+16ffafad785ad60619ce58f210008f4f *man/quick.norm.Rd
