@@ -1,10 +1,11 @@
 akmeans <-
-function(x, ths1=0.2, ths2=0.2, ths3=0.7, min.k=5, max.k=100, iter.max=100, nstart=1, mode=1, d.metric=1, verbose=TRUE){
+function(x, ths1=0.2, ths2=0.2, ths3=0.7, ths4=0.2, min.k=5, max.k=100, iter.max=100, nstart=1, mode=1, d.metric=1, verbose=TRUE){
 ## x: data matrix n by p: all elements should be numeric
 ## ths1: threshold to decide whether to increase k or not: check sum((sample-assigned center)^2) < ths1*sum(assigned center^2)
 ## ths2: threshold to decide whether to increase k or not: check all components of |sample-assigned center| < ths2
 ## ths3: threshold to decide whether to increase k or not: check inner product of (sample,assigned center) > ths3 , this is only for cosine distance metric 
-## mode: 1: use ths1, 2: use ths2, 3: use ths3
+## ths4: threshold to decide whether to increase k or not: check sum(abs(sample-assigned center)) < ths4 
+## mode: 1: use ths1, 2: use ths2, 3: use ths3, 4: use ths4
 ## d.metric: 1: use euclidean distance metric, otherwise use cosine distance metric
 ## iter.max, nstart: will be delivered to kmeans
 ## min.k: minimum k=> start kmeans from min.k
@@ -21,6 +22,8 @@ function(x, ths1=0.2, ths2=0.2, ths3=0.7, min.k=5, max.k=100, iter.max=100, nsta
 ## 7. Run K-means setting the present cluster centers as the initial centers and go to step 4.
 
   require('stats')
+
+  if (!(mode%in%c(1:4))) stop('Choose a valid mode')
   now.k = min.k; n = nrow(x); p = ncol(x)
 
   if (d.metric==1){
@@ -36,6 +39,8 @@ function(x, ths1=0.2, ths2=0.2, ths3=0.7, min.k=5, max.k=100, iter.max=100, nsta
       vio.idx = which(apply((x-res$centers[res$cluster,])^2,1,sum) > ths1*apply(res$centers[res$cluster,]^2,1,sum))
     } else if (mode==2){ ## use ths2
       vio.idx = which(apply(abs(x-res$centers[res$cluster,]),1,function(i){any(i>ths2)})==TRUE)
+    } else if (mode==4){ ## use ths4
+      vio.idx = which(apply(abs(x-res$centers[res$cluster,]),1,sum)>ths4)
     } else { ## use ths3 this is especially for cosine distance
       vio.idx = which(apply(x*res$centers[res$cluster,],1,sum) < ths3)
     }
@@ -69,7 +74,7 @@ function(x, ths1=0.2, ths2=0.2, ths3=0.7, min.k=5, max.k=100, iter.max=100, nsta
       }
       now.centers = res$centers
     } else { ## converged
-      print(paste('converged at k=',now.k))
+      if (verbose) print(paste('converged at k=',now.k))
       return(res)
     }  
   }

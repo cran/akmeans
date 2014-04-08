@@ -15,8 +15,8 @@ Adaptive K-means algorithm is quite simple
 ## 7. Run K-means setting the present cluster centers as the initial centers and go to step 4.
 }
 \usage{
-akmeans(x, ths1 = 0.2, ths2 = 0.2, ths3 = 0.7, min.k = 5, max.k = 100, iter.max = 100, nstart = 1, mode = 1, d.metric = 1, verbose = TRUE)
-}
+akmeans(x, ths1 = 0.2, ths2 = 0.2, ths3 = 0.7, ths4 = 0.2, min.k = 5, max.k = 100, 
+        iter.max = 100, nstart = 1, mode = 1, d.metric = 1, verbose = TRUE)}
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
@@ -30,6 +30,9 @@ threshold to decide whether to increase k or not: check all components of |sampl
 }
   \item{ths3}{
 threshold to decide whether to increase k or not: check inner product of (sample,assigned center) > ths3 , this is only for cosine distance metric
+}
+  \item{ths4}{
+threshold to decide whether to increase k or not: check all components of sum(abs(sample-assigned center)) < ths4
 }
   \item{min.k}{
 minimum number of clusters, starting k
@@ -57,6 +60,7 @@ print the messages or not
 ## ths1: threshold to decide whether to increase k or not: check sum((sample-assigned center)^2) < ths1*sum(assigned center^2)
 ## ths2: threshold to decide whether to increase k or not: check all components of |sample-assigned center| < ths2
 ## ths3: threshold to decide whether to increase k or not: check inner product of (sample,assigned center) > ths3 , this is only for cosine distance metric
+## ths4: threshold to decide whether to increase k or not: check all components of sum(abs(sample-assigned center)) < ths4
 }
 \value{
 if d.metric=1, it will return the same result as 'kmeans' function.
